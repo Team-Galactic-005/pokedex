@@ -1,7 +1,11 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function CardsPokemons({ pokemons, isLoading, error }) {
-    
+    const navigate = useNavigate()
+    const goToPokemonProfile = (pokemonId) => {
+        navigate(`/profilepokemon/${pokemonId}`)
+    }
     return (
         <div className='grid grid-cols-4 gap-5'>
             {isLoading ? (
@@ -17,7 +21,7 @@ function CardsPokemons({ pokemons, isLoading, error }) {
                 const formattedId = pokemon.id.toString().padStart(4, '0')
                 const formattedName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1).toLowerCase()
                 return (
-                    <div className='grid border border-[#466E9B] py-4 rounded-3xl bg-[#0A141E] text-white' key={pokemon.id}>
+                    <div className='grid border border-[#466E9B] py-4 rounded-3xl bg-[#0A141E] text-white cursor-pointer' key={pokemon.id} onClick={() => goToPokemonProfile(pokemon.id)}>
                         <div className='flex justify-center'>
                             <img className='border rounded-full' src={pokemon.sprites.front_default} alt={pokemon.name} />
                         </div>

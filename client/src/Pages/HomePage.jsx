@@ -6,7 +6,6 @@ function HomePage() {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
     const [pokemons, setPokemons] = useState([])
-    console.log(pokemons)
 
     const fetchPokemon = async () => {
         setIsLoading(true)
