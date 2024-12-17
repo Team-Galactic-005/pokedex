@@ -12,7 +12,7 @@ function HomePage() {
         setIsLoading(true)
         setError(null)
         try {
-            const { data } = await PokeAPI.get('/pokemon')
+            const { data } = await PokeAPI.get(`/pokemon?offset=0&limit=20`)
             const pokemonsPromises = data.results.map(async (pokemon) => {
                 const pokemonId = pokemon.url.split('/')[6]
                 return fetchPokemon2(pokemonId)

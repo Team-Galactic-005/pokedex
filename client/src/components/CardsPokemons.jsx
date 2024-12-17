@@ -1,6 +1,7 @@
 import React from 'react'
 
 function CardsPokemons({ pokemons, isLoading, error }) {
+    
     return (
         <div className='grid grid-cols-4 gap-5'>
             {isLoading ? (
