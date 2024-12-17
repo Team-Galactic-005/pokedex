@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import PokeAPI from '../../library/axios'
-import CardsPokemons from '../../components/CardsPokemons'
+import PokeAPI from '../library/axios'
+import CardsPokemons from '../components/CardsPokemons'
 
 function HomePage() {
+    const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState(null)
     const [pokemons, setPokemons] = useState([])
     console.log(pokemons)
 
     const fetchPokemon = async () => {
+        setIsLoading(true)
+        setError(null)
         try {
             const { data } = await PokeAPI.get('/pokemon')
             const pokemonsPromises = data.results.map(async (pokemon) => {
@@ -18,28 +22,35 @@ function HomePage() {
             setPokemons(pokemonsData)
         } catch (err) {
             console.log(err)
+            setError(err)
+        } finally {
+            setIsLoading(false)
         }
     }
 
     const fetchPokemon2 = async (pokemonId) => {
+        setIsLoading(true)
+        setError(null)
         try {
             return await PokeAPI.get(`/pokemon/${pokemonId}`)
         } catch (err) {
             console.log(err)
+            setError(err)
+        } finally {
+            setIsLoading(false)
         }
     }
     useEffect(() => {
         fetchPokemon()
     }, [])
     return (
-        <div className='container mx-auto'>
+        <div className='container mx-auto text-white'>
             <div>HomePage</div>
             <div>Search Form</div>
             <div>Filter</div>
-            <CardsPokemons pokemons={pokemons}/>
+            <CardsPokemons pokemons={pokemons} isLoading={isLoading} error={error}/>
             <div>Footer</div>
         </div>
-
     )
 }
 
