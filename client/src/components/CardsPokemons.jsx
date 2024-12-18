@@ -23,7 +23,7 @@ function CardsPokemons({ pokemons, isLoading, error }) {
                 return (
                     <div className='grid border border-[#466E9B] py-4 rounded-3xl bg-[#0A141E] text-white cursor-pointer' key={pokemon.id} onClick={() => goToPokemonProfile(pokemon.id)}>
                         <div className='flex justify-center'>
-                            <img className='border rounded-full' src={pokemon.sprites.front_default} alt={pokemon.name} />
+                            <img className='' src={pokemon.sprites?.other['official-artwork']?.front_default} alt={pokemon.name} />
                         </div>
                         <div className='grid gap-y-10 px-5'>
                             <div>

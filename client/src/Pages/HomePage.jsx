@@ -20,7 +20,7 @@ function HomePage() {
             const pokemonsData = pokemonsResponses.map((response) => response.data)
             setPokemons(pokemonsData)
         } catch (err) {
-            console.log(err)
+            console.error(err)
             setError(err)
         } finally {
             setIsLoading(false)
