@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import PokeAPI from '../library/axios'
 
 function ProfilePokemonPage() {
@@ -37,7 +37,7 @@ function ProfilePokemonPage() {
     return (
         <div className='container mx-auto text-white my-5'>
             <div className='flex justify-center mb-5'>
-                <h1 className='text-3xl'>Pokédex</h1>
+                <Link to='/'><h1 className='text-3xl'>Pokédex</h1></Link>
             </div>
             <div className='flex justify-between'>
                 <div>
