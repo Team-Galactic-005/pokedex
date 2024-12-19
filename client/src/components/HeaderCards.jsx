@@ -8,7 +8,7 @@ function HeaderCards({ headerPokemons }) {
     }
     return (
         <div className='grid justify-center text-center'>
-            <div className=''>
+            <div>
                 <div className='mb-5'>
                     <Link to='/'><h1 className='text-3xl'>Pokédex</h1></Link>
                 </div>
