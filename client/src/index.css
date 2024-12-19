@@ -5,3 +5,8 @@
 :root {
   background-color: #0A141E;
 }
+
+.random {
+  background-image: url("https://id.portal-pokemon.com/play/resources/pokedex/img/random_bg.png");
+  background-size: cover;
+}

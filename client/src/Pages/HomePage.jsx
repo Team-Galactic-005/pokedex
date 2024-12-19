@@ -177,7 +177,7 @@ function HomePage() {
     return (
         <div className="container mx-auto text-white grid gap-y-10">
             <NavBar />
-            <HeaderCards headerPokemons={headerPokemons}/>
+            <HeaderCards headerPokemons={headerPokemons} isLoading={isLoading} error={error}/>
             <SearchForm submitForm={submitForm} setSearch={setSearch}/>
             <FilterPokemons types={types} regions={regions} abylitys={abylitys} setFilterPokemons={setFilterPokemons}/>
             {searchResults && searchResults.name ? (
