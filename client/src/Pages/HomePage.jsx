@@ -3,6 +3,7 @@ import PokeAPI from "../library/axios";
 import CardsPokemons from "../components/CardsPokemons";
 import NavBar from "../components/NavBar";
 import FilterPokemons from "../components/FilterPokemons";
+import SearchForm from "../components/SearchForm";
 
 function HomePage() {
     const [isLoading, setIsLoading] = useState(false)
@@ -135,7 +136,7 @@ function HomePage() {
     return (
         <div className="container mx-auto text-white grid gap-y-10">
             <NavBar />
-            <div>Search Form</div>
+            <SearchForm/>
             <FilterPokemons types={types} regions={regions} abylitys={abylitys}/>
             <CardsPokemons pokemons={pokemons} isLoading={isLoading} error={error} loadMorePokemons={loadMorePokemons}/>          
             <div>Footer</div>
