@@ -6,6 +6,7 @@ import FilterPokemons from "../components/FilterPokemons";
 import SearchForm from "../components/SearchForm";
 import HeaderCards from "../components/HeaderCards";
 import SearchResults from "../components/SearchResults";
+import Footer from "../components/Footer";
 
 function HomePage() {
     const [isLoading, setIsLoading] = useState(false)
@@ -185,7 +186,7 @@ function HomePage() {
             ) : (
                 <CardsPokemons pokemons={pokemons} filterPokemons={filterPokemons} isLoading={isLoading} error={error} loadMorePokemons={loadMorePokemons} />
             )}
-            <div>Footer</div>
+            <Footer/>
         </div>
     );
 }

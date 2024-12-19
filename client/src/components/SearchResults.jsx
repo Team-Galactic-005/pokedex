@@ -42,7 +42,7 @@ function SearchResults({ searchResults }) {
         <div className='grid grid-cols-4 gap-5'>
             <div className='grid border border-[#466E9B] py-4 rounded-3xl bg-[#0A141E] text-white cursor-pointer' onClick={() => goToPokemonProfile(searchResults.id)}>
                 <div className='flex justify-center'>
-                    <img className='' src={searchResults.sprites?.other['official-artwork']?.front_default} alt={searchResults.name} />
+                    <img src={searchResults.sprites?.other['official-artwork']?.front_default} alt={searchResults.name} />
                 </div>
                 <div className='grid gap-y-10 px-5'>
                     <div>
