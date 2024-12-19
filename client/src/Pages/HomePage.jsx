@@ -12,28 +12,42 @@ function HomePage() {
     const [regions, setRegions] = useState([])
     const [abylitys, setAbylitys] = useState([])
     const [filteredPokemons, setFilteredPokemons] = useState([])
+    const [offset, setOffset] = useState(0)
     // console.log(pokemons)
     console.log()
 
-    const fetchPokemon = async () => {
+    const fetchPokemon = async (offsetValue = 0) => {
         setIsLoading(true)
         setError(null)
         try {
-            const { data } = await PokeAPI.get(`/pokemon?offset=${0}&limit=20`);
+            const { data } = await PokeAPI.get(`/pokemon?offset=${offsetValue}&limit=20`)
             const pokemonsPromises = data.results.map(async (pokemon) => {
-                const pokemonId = pokemon.url.split("/")[6];
-                return fetchPokemon2(pokemonId);
-            });
-            const pokemonsResponses = await Promise.all(pokemonsPromises);
-            const pokemonsData = pokemonsResponses.map((response) => response.data);
-            setPokemons(pokemonsData);
+                const pokemonId = pokemon.url.split('/')[6]
+                return fetchPokemon2(pokemonId)
+            })
+            const pokemonsResponses = await Promise.all(pokemonsPromises)
+            const pokemonsData = pokemonsResponses.map((response) => response.data)
+            setPokemons((prevPokemons) => {
+                const newPokemons = pokemonsData.filter(pokemon => 
+                    !prevPokemons.some(existingPokemon => existingPokemon.id === pokemon.id)
+                )
+                return [...prevPokemons, ...newPokemons]
+            })
         } catch (err) {
             console.log(err);
             setError(err)
         } finally {
             setIsLoading(false)
         }
-    };
+    }
+
+    const loadMorePokemons = () => {
+        setOffset((prevOffset) => {
+            const newOffset = prevOffset + 20
+            fetchPokemon(newOffset)
+            return newOffset
+        })
+    }
 
     const fetchPokemon2 = async (pokemonId) => {
         setIsLoading(true)
@@ -123,7 +137,7 @@ function HomePage() {
             <NavBar />
             <div>Search Form</div>
             <FilterPokemons types={types} regions={regions} abylitys={abylitys}/>
-            <CardsPokemons pokemons={pokemons} isLoading={isLoading} error={error}/>
+            <CardsPokemons pokemons={pokemons} isLoading={isLoading} error={error} loadMorePokemons={loadMorePokemons}/>          
             <div>Footer</div>
         </div>
     );
