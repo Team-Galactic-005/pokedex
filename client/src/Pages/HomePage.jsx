@@ -14,9 +14,9 @@ function HomePage() {
     const [types, setTypes] = useState([])
     const [regions, setRegions] = useState([])
     const [abylitys, setAbylitys] = useState([])
-    // const [filteredPokemons, setFilteredPokemons] = useState([])
+    const [filterPokemons, setFilterPokemons] = useState([])
     const [offset, setOffset] = useState(0)
-    console.log()
+    console.log(filterPokemons)
 
     const fetchPokemon = async (offsetValue = 0) => {
         setIsLoading(true)
@@ -163,6 +163,7 @@ function HomePage() {
         fetchTypePokemons()
         fetchRegionPokemons()
         fetchAbilitysPokemons()
+        setFilterPokemons(pokemons)
     }, [])
 
     // useEffect(() => {
@@ -174,8 +175,8 @@ function HomePage() {
             <NavBar />
             <HeaderCards headerPokemons={headerPokemons}/>
             <SearchForm />
-            <FilterPokemons types={types} regions={regions} abylitys={abylitys} />
-            <CardsPokemons pokemons={pokemons} isLoading={isLoading} error={error} loadMorePokemons={loadMorePokemons} />
+            <FilterPokemons types={types} regions={regions} abylitys={abylitys} setFilterPokemons={setFilterPokemons}/>
+            <CardsPokemons pokemons={pokemons} filterPokemons={filterPokemons} isLoading={isLoading} error={error} loadMorePokemons={loadMorePokemons} />
             <div>Footer</div>
         </div>
     );

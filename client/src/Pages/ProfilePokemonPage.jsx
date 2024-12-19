@@ -2,6 +2,30 @@ import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import PokeAPI from '../library/axios'
 
+const colorButton = {
+    normal: 'bg-[#A0A0A0] border-[#DCDCDC]',
+    fighting: 'bg-[#C85500] border-[#DC6900]',
+    flying: 'bg-[#79BCD7] border-[#78DCFF]',
+    poison: 'bg-[#BE78BE] border-[#D28CD2]',
+    ground: 'bg-[#CCA142] border-[#F9C75A]',
+    rock: 'bg-[#A07850] border-[#B48C64]',
+    bug: 'bg-[#32B432] border-[#46C846]',
+    ghost: 'bg-[#8C78F0] border-[#A08CFF]',
+    steel: 'bg-[#96B4DC] border-[#AAC8F0]',
+    fire: 'bg-[#FF3700] border-[#FF6900]',
+    water: 'bg-[#0094E5] border-[#14B9FF]',
+    grass: 'bg-[#92BF19] border-[#B4F000]',
+    electric: 'bg-[#E4B700] border-[#FFE100]',
+    psychic: 'bg-[#DC78C8] border-[#EF8BDB]',
+    ice: 'bg-[#00B7EE] border-[#14F5FF]',
+    dragon: 'bg-[#3C64C8] border-[#5078DC]',
+    dark: 'bg-[#606060] border-[#787878]',
+    fairy: 'bg-[#FF7EB8] border-[#FDAEDA]',
+    stellar: 'bg-[#A0A0A0]',
+    shadow: 'bg-[#A0A0A0]',
+    unknown: 'bg-[#A0A0A0]'
+}
+
 function ProfilePokemonPage() {
     const params = useParams()
     const pokemonId = params.idPokemon
@@ -10,6 +34,10 @@ function ProfilePokemonPage() {
     const [error, setError] = useState(null)
     const [profilePokemon, setProfilePokemon] = useState([])
     console.log(profilePokemon)
+
+    const setButtonColor = (type) => {
+        return colorButton[type]
+    }
 
     const fetchProfilePokemon = async () => {
         setIsLoading(true)
@@ -58,29 +86,7 @@ function ProfilePokemonPage() {
                         {profilePokemon.types?.map((type) => {
                             const formattedType = type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1).toLowerCase()
                             return (
-                                <p className={`text-lg border py-1 px-40 mb-5 rounded-full cursor-pointer
-                                    ${type.type.name === 'normal' ? 'bg-[#A0A0A0] border-[#DCDCDC]' :
-                                        type.type.name === 'fighting' ? 'bg-[#C85500] border-[#DC6900]' :
-                                            type.type.name === 'flying' ? 'bg-[#79BCD7] border-[#78DCFF]' :
-                                                type.type.name === 'poison' ? 'bg-[#BE78BE] border-[#D28CD2]' :
-                                                    type.type.name === 'ground' ? 'bg-[#CCA142] border-[#F9C75A]' :
-                                                        type.type.name === 'rock' ? 'bg-[#A07850] border-[#B48C64]' :
-                                                            type.type.name === 'bug' ? 'bg-[#32B432] border-[#46C846]' :
-                                                                type.type.name === 'ghost' ? 'bg-[#8C78F0] border-[#A08CFF]' :
-                                                                    type.type.name === 'steel' ? 'bg-[#96B4DC] border-[#AAC8F0]' :
-                                                                        type.type.name === 'fire' ? 'bg-[#FF3700] border-[#FF6900]' :
-                                                                            type.type.name === 'water' ? 'bg-[#0094E5] border-[#14B9FF]' :
-                                                                                type.type.name === 'grass' ? 'bg-[#92BF19] border-[#B4F000]' :
-                                                                                    type.type.name === 'electric' ? 'bg-[#E4B700] border-[#FFE100]' :
-                                                                                        type.type.name === 'psychic' ? 'bg-[#DC78C8] border-[#EF8BDB]' :
-                                                                                            type.type.name === 'ice' ? 'bg-[#00B7EE] border-[#14F5FF]' :
-                                                                                                type.type.name === 'dragon' ? 'bg-[#3C64C8] border-[#5078DC]' :
-                                                                                                    type.type.name === 'dark' ? 'bg-[#606060] border-[#787878]' :
-                                                                                                        type.type.name === 'fairy' ? 'bg-[#FF7EB8] border-[#FDAEDA]' :
-                                                                                                            type.type.name === 'stellar' ? 'bg-[]' :
-                                                                                                                type.type.name === 'shadow' ? 'bg-[]' :
-                                                                                                                    'bg-[#A0A0A0]'}    
-                                                                                                                        `} key={type.slot}>{formattedType}</p>
+                                <p className={`text-lg border py-1 px-40 mb-5 rounded-full cursor-pointer ${setButtonColor(type.type.name)}`} key={type.slot}>{formattedType}</p>
                             )
                         })}
                     </div>
