@@ -5,6 +5,7 @@ import NavBar from "../components/NavBar";
 import FilterPokemons from "../components/FilterPokemons";
 import SearchForm from "../components/SearchForm";
 import HeaderCards from "../components/HeaderCards";
+import SearchResults from "../components/SearchResults";
 
 function HomePage() {
     const [isLoading, setIsLoading] = useState(false)
@@ -16,7 +17,28 @@ function HomePage() {
     const [abylitys, setAbylitys] = useState([])
     const [filterPokemons, setFilterPokemons] = useState([])
     const [offset, setOffset] = useState(0)
-    console.log(filterPokemons)
+    const [search, setSearch] = useState('')
+    const [searchResults, setSearchResults] = useState([])
+    console.log(searchResults)
+
+    const searchPokemon = async (search) => {
+        setIsLoading(true)
+        setError(null)
+        try {
+            const { data } = await PokeAPI.get(`pokemon/${search}`)
+            setSearchResults(data)
+        } catch (err) {
+            console.log(err)
+            setError(err)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const submitForm = (e) => {
+        e.preventDefault()
+        searchPokemon(search)
+    }
 
     const fetchPokemon = async (offsetValue = 0) => {
         setIsLoading(true)
@@ -113,42 +135,28 @@ function HomePage() {
         }
     }
 
-    const fetchRegionPokemons = async () => {
-        setIsLoading(true)
-        setError(null)
-        try {
-            const response = await PokeAPI.get(`region`)
-            const { results } = response.data
-            setRegions(results)
-        } catch (err) {
-            console.log(err);
-            setError(err)
-        } finally {
-            setIsLoading(false)
-        }
-    }
-
-    const fetchAbilitysPokemons = async () => {
-        setIsLoading(true)
-        setError(null)
-        try {
-            const response = await PokeAPI.get(`ability?offset=0&limit=367`)
-            const { results } = response.data
-            setAbylitys(results)
-        } catch (err) {
-            console.log(err)
-            setError(err)
-        } finally {
-            setIsLoading(false)
-        }
-    }
-
-    // const filterPokemons = async () => {
+    // const fetchRegionPokemons = async () => {
     //     setIsLoading(true)
     //     setError(null)
     //     try {
-    //         const { data } = await PokeAPI.get(`${'type'}/${'fighting'}`)
-    //         setFilteredPokemons(data)
+    //         const response = await PokeAPI.get(`region`)
+    //         const { results } = response.data
+    //         setRegions(results)
+    //     } catch (err) {
+    //         console.log(err);
+    //         setError(err)
+    //     } finally {
+    //         setIsLoading(false)
+    //     }
+    // }
+
+    // const fetchAbilitysPokemons = async () => {
+    //     setIsLoading(true)
+    //     setError(null)
+    //     try {
+    //         const response = await PokeAPI.get(`ability?offset=0&limit=367`)
+    //         const { results } = response.data
+    //         setAbylitys(results)
     //     } catch (err) {
     //         console.log(err)
     //         setError(err)
@@ -160,23 +168,23 @@ function HomePage() {
     useEffect(() => {
         fetchPokemon()
         fetchHeaderCards()
-        fetchTypePokemons()
-        fetchRegionPokemons()
-        fetchAbilitysPokemons()
         setFilterPokemons(pokemons)
+        fetchTypePokemons()
+        // fetchAbilitysPokemons()
+        // fetchRegionPokemons()
     }, [])
-
-    // useEffect(() => {
-    //     filterPokemons()
-    // }, [filteredPokemons])
 
     return (
         <div className="container mx-auto text-white grid gap-y-10">
             <NavBar />
             <HeaderCards headerPokemons={headerPokemons}/>
-            <SearchForm />
+            <SearchForm submitForm={submitForm} setSearch={setSearch}/>
             <FilterPokemons types={types} regions={regions} abylitys={abylitys} setFilterPokemons={setFilterPokemons}/>
-            <CardsPokemons pokemons={pokemons} filterPokemons={filterPokemons} isLoading={isLoading} error={error} loadMorePokemons={loadMorePokemons} />
+            {searchResults && searchResults.name ? (
+                <SearchResults searchResults={searchResults}/>
+            ) : (
+                <CardsPokemons pokemons={pokemons} filterPokemons={filterPokemons} isLoading={isLoading} error={error} loadMorePokemons={loadMorePokemons} />
+            )}
             <div>Footer</div>
         </div>
     );
