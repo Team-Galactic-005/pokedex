@@ -26,7 +26,7 @@ const colorButton = {
     unknown: 'bg-[#A0A0A0]'
 }
 
-function CardsPokemons({ pokemons, isLoading, error, loadMorePokemons, filterPokemons }) {
+function CardsPokemonsByType({ pokemons, isLoading, error, loadMorePokemons, filterPokemons }) {
     const navigate = useNavigate()
     const goToPokemonProfile = (pokemonId) => {
         navigate(`/profilepokemon/${pokemonId}`)
@@ -45,10 +45,10 @@ function CardsPokemons({ pokemons, isLoading, error, loadMorePokemons, filterPok
                     </div>
                 ) : error ? (
                     <div>
-                        <span>Data Not Found</span>
+                        <span>Error</span>
                     </div>
                 ) : (
-                    pokemons?.map((pokemon) => {
+                    filterPokemons?.map((pokemon) => {
                         const formattedId = pokemon.id.toString().padStart(4, '0')
                         const formattedName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1).toLowerCase()
                         const pokemonImage = pokemon.sprites?.other['official-artwork']?.front_default || pokeBall
@@ -76,11 +76,8 @@ function CardsPokemons({ pokemons, isLoading, error, loadMorePokemons, filterPok
                     })
                 )}
             </div>
-            <div className='flex justify-center'>
-                <button onClick={loadMorePokemons} className='border border-[#466E9B] rounded-full p-2 w-[50%] text-lg text-[#b3eafe] hover:bg-[#B4EBFF] hover:text-black hover:border-transparent'>Load More</button>
-            </div>
         </>
     )
 }
 
-export default CardsPokemons
+export default CardsPokemonsByType

@@ -49,10 +49,10 @@ const colorButtonOn = {
     unknown: `text-black border-transparent bg-[#DCDCDC]`
 }
 
-function FilterPokemons({ types, regions, abylitys, setFilterPokemons }) {
+function FilterPokemons({ types, regions, abylitys, setFilterPokemons,typeFilter, setTypeFilter, handleSubmit }) {
     const [filterMode, setFilterMode] = useState(false)
     const [range, setRange] = useState({ min: 1, max: 1025 })
-    const [typeFilter, setTypeFilter] = useState([])
+    // const [typeFilter, setTypeFilter] = useState([])
 
 
     const handleFilterMode = () => {
@@ -84,11 +84,17 @@ function FilterPokemons({ types, regions, abylitys, setFilterPokemons }) {
         return colorButtonOn[type]
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        const { data } = await PokeAPI.get(`/type/${typeFilter[0]}`)
-        setFilterPokemons(data.pokemon)
-        
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault()
+    //     const { data } = await PokeAPI.get(`/type/${typeFilter[0]}`)
+    //     setFilterPokemons(data.pokemon)
+    //     console.log(data)
+    // }
+
+    const handleReset = () => {
+        setTypeFilter([])  
+        setFilterPokemons([])
+        setFilterMode(false)
     }
 
     return (
@@ -100,7 +106,6 @@ function FilterPokemons({ types, regions, abylitys, setFilterPokemons }) {
                             <div className='mb-10 border-b-[1px] pb-10'>
                                 <label className='text-3xl text-[#B4EBFF]'>Tipe</label>
                             </div>
-                            {JSON.stringify(typeFilter)}
                             <div className='grid grid-cols-6 text-center gap-x-4'>
                                 {types?.map((type) => {
                                     const formattedType = type.name.charAt(0).toUpperCase() + type.name.slice(1).toLowerCase()
@@ -149,8 +154,8 @@ function FilterPokemons({ types, regions, abylitys, setFilterPokemons }) {
                             })}
                         </div>
                     </div> */}
-                    <div className='grid mb-10 text-xl'>
-                        {/* <button className='border rounded-full py-2 border-[#B3EAFE] text-[#B3EAFE]'>Reset</button> */}
+                    <div className='grid grid-cols-2 gap-x-10 mb-10 text-xl'>
+                        <button className='border rounded-full py-2 border-[#B3EAFE] text-[#B3EAFE]' onClick={handleReset}>Reset</button>
                         <button className='border rounded-full py-2 border-transparent bg-[#B3EAFE] text-black hover:bg-[#81dbfc]'>Pencarian</button>
                     </div>
                 </>

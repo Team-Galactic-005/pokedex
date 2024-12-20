@@ -7,6 +7,7 @@ import SearchForm from "../components/SearchForm";
 import HeaderCards from "../components/HeaderCards";
 import SearchResults from "../components/SearchResults";
 import Footer from "../components/Footer";
+import CardsPokemonsByType from "../components/CardsPokemonsByType";
 
 function HomePage() {
     const [isLoading, setIsLoading] = useState(false)
@@ -16,11 +17,12 @@ function HomePage() {
     const [types, setTypes] = useState([])
     const [regions, setRegions] = useState([])
     const [abylitys, setAbylitys] = useState([])
-    const [filterPokemons, setFilterPokemons] = useState([])
     const [offset, setOffset] = useState(0)
     const [search, setSearch] = useState('')
     const [searchResults, setSearchResults] = useState([])
-    console.log(searchResults)
+    const [typeFilter, setTypeFilter] = useState([])
+    const [filterPokemons, setFilterPokemons] = useState([])
+    console.log(filterPokemons)
 
     const searchPokemon = async (search) => {
         setIsLoading(true)
@@ -35,10 +37,40 @@ function HomePage() {
             setIsLoading(false)
         }
     }
-
+    
     const submitForm = (e) => {
         e.preventDefault()
         searchPokemon(search)
+    }
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const { data } = await PokeAPI.get(`/type/${typeFilter[0]}`)
+        const typesPromises = data.pokemon.map(async (pokemon) => {
+            const pokemonIdByType = pokemon.pokemon.url.split('/')[6]
+                return handleSubmit2(pokemonIdByType)
+        })
+        const pokemonsResponses = await Promise.all(typesPromises)
+        const pokemonsData = pokemonsResponses.map((response) => response.data)
+        setFilterPokemons((prevPokemons) => {
+                const newPokemons = pokemonsData.filter(pokemon =>
+                    !prevPokemons.some(existingPokemon => existingPokemon.id === pokemon.id)
+                )
+                return [...newPokemons]
+            })
+    }
+
+    const handleSubmit2 = async (pokemonIdByType) => {
+        setIsLoading(true)
+        setError(null)
+        try {
+            return await PokeAPI.get(`/pokemon/${pokemonIdByType}`);
+        } catch (err) {
+            console.log(err);
+            setError(err)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     const fetchPokemon = async (offsetValue = 0) => {
@@ -46,6 +78,7 @@ function HomePage() {
         setError(null)
         try {
             const { data } = await PokeAPI.get(`/pokemon?offset=${offsetValue}&limit=20`)
+            console.log(data)
             const pokemonsPromises = data.results.map(async (pokemon) => {
                 const pokemonId = pokemon.url.split('/')[6]
                 return fetchPokemon2(pokemonId)
@@ -169,8 +202,8 @@ function HomePage() {
     useEffect(() => {
         fetchPokemon()
         fetchHeaderCards()
-        setFilterPokemons(pokemons)
         fetchTypePokemons()
+        handleSubmit()
         // fetchAbilitysPokemons()
         // fetchRegionPokemons()
     }, [])
@@ -180,9 +213,11 @@ function HomePage() {
             <NavBar />
             <HeaderCards headerPokemons={headerPokemons} isLoading={isLoading} error={error}/>
             <SearchForm submitForm={submitForm} setSearch={setSearch}/>
-            <FilterPokemons types={types} regions={regions} abylitys={abylitys} setFilterPokemons={setFilterPokemons}/>
+            <FilterPokemons types={types} regions={regions} abylitys={abylitys} setFilterPokemons={setFilterPokemons} typeFilter={typeFilter} setTypeFilter={setTypeFilter} handleSubmit={handleSubmit}/>
             {searchResults && searchResults.name ? (
                 <SearchResults searchResults={searchResults}/>
+            ) : (filterPokemons && filterPokemons.length > 0) ? (
+                <CardsPokemonsByType filterPokemons={filterPokemons} isLoading={isLoading} error={error}/>
             ) : (
                 <CardsPokemons pokemons={pokemons} filterPokemons={filterPokemons} isLoading={isLoading} error={error} loadMorePokemons={loadMorePokemons} />
             )}
