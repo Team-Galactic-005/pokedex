@@ -178,9 +178,14 @@ function ProfilePokemonPage() {
                     </div>
                 </div>
                 <div className='grid grid-cols-3'>
-                    <div className='ps-20'>
-                        <h1 className='text-3xl text-[#B0E5F9]'>Version</h1>
-                        <p className='text-xl mt-5'>Mandi cahaya matahari membuat Ivysaur makin kuat dan menumbuhkan kuncup di punggungnya.</p>
+                    <div className='ps-20 grid'>
+                        <h1 className='text-3xl text-[#B0E5F9]'>Body</h1>
+                        <div>
+                            <div className='flex justify-around gap-x-3'>
+                                <img src={profilePokemon.sprites?.other?.showdown.front_default} alt='' />
+                                <img src={profilePokemon.sprites?.other?.showdown.back_default} alt='' />
+                            </div>
+                        </div>
                     </div>
                     <div>
 
