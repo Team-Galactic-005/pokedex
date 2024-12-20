@@ -75,6 +75,10 @@ function FavoritePage() {
                     <div>
                         <span>Data Not Found</span>
                     </div>
+                ) : favorites.length === 0 ? (
+                    <div>
+                        <span>No favorites yet.</span>
+                    </div>
                 ) : (
                     favorites?.map((favorite) => {
                         const formattedId = favorite.id.toString().padStart(4, '0')
