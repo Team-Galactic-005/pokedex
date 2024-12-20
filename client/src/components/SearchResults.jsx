@@ -25,7 +25,7 @@ const colorButton = {
     unknown: 'bg-[#A0A0A0]'
 }
 
-function SearchResults({ searchResults }) {
+function SearchResults({ searchResults, isLoading, error }) {
 
     const navigate = useNavigate()
     const goToPokemonProfile = (pokemonId) => {
@@ -40,25 +40,35 @@ function SearchResults({ searchResults }) {
     const formattedName = searchResults.name.charAt(0).toUpperCase() + searchResults.name.slice(1).toLowerCase()
     return (
         <div className='grid grid-cols-4 gap-5'>
-            <div className='grid border border-[#466E9B] py-4 rounded-3xl bg-[#0A141E] text-white cursor-pointer' onClick={() => goToPokemonProfile(searchResults.id)}>
-                <div className='flex justify-center'>
-                    <img src={searchResults.sprites?.other['official-artwork']?.front_default} alt={searchResults.name} />
+            {isLoading ? (
+                <div>
+                    <span>Loading ...</span>
                 </div>
-                <div className='grid gap-y-10 px-5'>
-                    <div>
-                        <h1 className='text-[#B4EBFF]'>{formattedId}</h1>
-                        <h1 className='text-xl font-semibold'>{formattedName}</h1>
+            ) : error ? (
+                <div>
+                    <span>Data Not Found</span>
+                </div>
+            ) : (
+                <div className='grid border border-[#466E9B] py-4 rounded-3xl bg-[#0A141E] text-white cursor-pointer' onClick={() => goToPokemonProfile(searchResults.id)}>
+                    <div className='flex justify-center'>
+                        <img src={searchResults.sprites?.other['official-artwork']?.front_default} alt={searchResults.name} />
                     </div>
-                    <div className='grid grid-cols-2 text-center gap-x-5'>
-                        {searchResults.types?.map((type) => {
-                            const formattedType = type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1).toLowerCase()
-                            return (
-                                <h1 className={`border rounded-full py-1 ${setButtonColor(type.type.name)}`} key={type.slot}>{formattedType}</h1>
-                            )
-                        })}
+                    <div className='grid gap-y-10 px-5'>
+                        <div>
+                            <h1 className='text-[#B4EBFF]'>{formattedId}</h1>
+                            <h1 className='text-xl font-semibold'>{formattedName}</h1>
+                        </div>
+                        <div className='grid grid-cols-2 text-center gap-x-5'>
+                            {searchResults.types?.map((type) => {
+                                const formattedType = type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1).toLowerCase()
+                                return (
+                                    <h1 className={`border rounded-full py-1 ${setButtonColor(type.type.name)}`} key={type.slot}>{formattedType}</h1>
+                                )
+                            })}
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
         </div>
     )
 }

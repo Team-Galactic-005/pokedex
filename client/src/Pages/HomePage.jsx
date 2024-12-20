@@ -25,10 +25,11 @@ function HomePage() {
     console.log(filterPokemons)
 
     const searchPokemon = async (search) => {
+        const searchQuery = search.toLowerCase()
         setIsLoading(true)
         setError(null)
         try {
-            const { data } = await PokeAPI.get(`pokemon/${search}`)
+            const { data } = await PokeAPI.get(`pokemon/${searchQuery}`)
             setSearchResults(data)
         } catch (err) {
             console.log(err)
@@ -142,16 +143,12 @@ function HomePage() {
     }
 
     const fetchHeaderCards2 = async (pokemonId) => {
-        setIsLoading(true)
-        setError(null)
         try {
             return await PokeAPI.get(`/pokemon/${pokemonId}`);
         } catch (err) {
             console.log(err);
             setError(err)
-        } finally {
-            setIsLoading(false)
-        }
+        } 
     }
 
     const fetchTypePokemons = async () => {
@@ -215,7 +212,7 @@ function HomePage() {
             <SearchForm submitForm={submitForm} setSearch={setSearch}/>
             <FilterPokemons types={types} regions={regions} abylitys={abylitys} setFilterPokemons={setFilterPokemons} typeFilter={typeFilter} setTypeFilter={setTypeFilter} handleSubmit={handleSubmit}/>
             {searchResults && searchResults.name ? (
-                <SearchResults searchResults={searchResults}/>
+                <SearchResults searchResults={searchResults} isLoading={isLoading} error={error}/>
             ) : (filterPokemons && filterPokemons.length > 0) ? (
                 <CardsPokemonsByType filterPokemons={filterPokemons} isLoading={isLoading} error={error}/>
             ) : (

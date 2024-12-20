@@ -1,0 +1,122 @@
+{
+  "favoritePokemon": [
+    {
+      "id": 1,
+      "datetime": "2024-12-20T06:41:42.615Z",
+      "name": "bulbasaur",
+      "types": [
+        {
+          "slot": 1,
+          "type": {
+            "name": "grass",
+            "url": "https://pokeapi.co/api/v2/type/12/"
+          }
+        },
+        {
+          "slot": 2,
+          "type": {
+            "name": "poison",
+            "url": "https://pokeapi.co/api/v2/type/4/"
+          }
+        }
+      ],
+      "sprites": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+    },
+    {
+      "id": 3,
+      "datetime": "2024-12-20T06:42:20.890Z",
+      "name": "venusaur",
+      "types": [
+        {
+          "slot": 1,
+          "type": {
+            "name": "grass",
+            "url": "https://pokeapi.co/api/v2/type/12/"
+          }
+        },
+        {
+          "slot": 2,
+          "type": {
+            "name": "poison",
+            "url": "https://pokeapi.co/api/v2/type/4/"
+          }
+        }
+      ],
+      "sprites": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png"
+    },
+    {
+      "id": 16,
+      "datetime": "2024-12-20T06:42:26.958Z",
+      "name": "pidgey",
+      "types": [
+        {
+          "slot": 1,
+          "type": {
+            "name": "normal",
+            "url": "https://pokeapi.co/api/v2/type/1/"
+          }
+        },
+        {
+          "slot": 2,
+          "type": {
+            "name": "flying",
+            "url": "https://pokeapi.co/api/v2/type/3/"
+          }
+        }
+      ],
+      "sprites": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/16.png"
+    },
+    {
+      "id": 802,
+      "datetime": "2024-12-20T07:30:52.914Z",
+      "name": "marshadow",
+      "types": [
+        {
+          "slot": 1,
+          "type": {
+            "name": "fighting",
+            "url": "https://pokeapi.co/api/v2/type/2/"
+          }
+        },
+        {
+          "slot": 2,
+          "type": {
+            "name": "ghost",
+            "url": "https://pokeapi.co/api/v2/type/8/"
+          }
+        }
+      ],
+      "sprites": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/802.png"
+    },
+    {
+      "id": 38,
+      "datetime": "2024-12-20T07:31:28.379Z",
+      "name": "ninetales",
+      "types": [
+        {
+          "slot": 1,
+          "type": {
+            "name": "fire",
+            "url": "https://pokeapi.co/api/v2/type/10/"
+          }
+        }
+      ],
+      "sprites": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/38.png"
+    },
+    {
+      "id": 25,
+      "datetime": "2024-12-20T07:55:54.199Z",
+      "name": "pikachu",
+      "types": [
+        {
+          "slot": 1,
+          "type": {
+            "name": "electric",
+            "url": "https://pokeapi.co/api/v2/type/13/"
+          }
+        }
+      ],
+      "sprites": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"
+    }
+  ]
+}
