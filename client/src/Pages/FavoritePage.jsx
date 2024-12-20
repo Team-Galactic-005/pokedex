@@ -65,7 +65,7 @@ function FavoritePage() {
 
     return (
         <div className="container mx-auto text-white grid gap-y-10">
-            <NavBar/>
+            <NavBar />
             <div className='grid grid-cols-4 gap-5'>
                 {isLoading ? (
                     <div>
@@ -81,7 +81,7 @@ function FavoritePage() {
                         const formattedName = favorite.name.charAt(0).toUpperCase() + favorite.name.slice(1).toLowerCase()
                         const pokemonImage = favorite.sprites || pokeBall
                         return (
-                            <div className='grid border border-[#466E9B] py-4 rounded-3xl bg-[#0A141E] text-white cursor-pointer' key={favorite.id} onClick={() => goToPokemonProfile(favorite.id)}>
+                            <div className='grid border border-[#466E9B] py-4 rounded-3xl bg-[#0A141E] text-white cursor-pointer' key={favorite.id} onClick={() => goToPokemonProfile(favorite.idPokemon)}>
                                 <div className='flex justify-center'>
                                     <img className='' src={pokemonImage} alt={favorite.name} />
                                 </div>
@@ -104,7 +104,7 @@ function FavoritePage() {
                     })
                 )}
             </div>
-            <Footer/>
+            <Footer />
         </div>
 
     )

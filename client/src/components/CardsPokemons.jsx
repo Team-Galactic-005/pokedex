@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import  pokeBall from '../assets/pokeBall.png'
+import pokeBall from '../assets/pokeBall.png'
 
 const colorButton = {
     normal: 'bg-[#A0A0A0] border-[#DCDCDC]',
@@ -35,7 +35,7 @@ function CardsPokemons({ pokemons, isLoading, error, loadMorePokemons }) {
     const setButtonColor = (type) => {
         return colorButton[type]
     }
-    
+
     return (
         <>
             <div className='grid grid-cols-4 gap-5'>

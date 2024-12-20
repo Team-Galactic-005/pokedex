@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import PokeAPI from '../library/axios'
 import bg from '../assets/main_bg_v15_1.jpg'
 import favoriteAPI from '../library/favorite'
+import Swal from 'sweetalert2'
 
 const colorButton = {
     normal: 'bg-[#A0A0A0] border-[#DCDCDC]',
@@ -35,6 +36,7 @@ function ProfilePokemonPage() {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
     const [profilePokemon, setProfilePokemon] = useState([])
+    const [favoritePokemon, setFavoritePokemon] = useState([])
 
     const setButtonColor = (type) => {
         return colorButton[type]
@@ -54,17 +56,38 @@ function ProfilePokemonPage() {
         }
     }
 
+    const fetchFavorite = async () => {
+        setIsLoading(true)
+        setError(null)
+        try {
+            const { data } = await favoriteAPI.get(`/favoritePokemon/`)
+            setFavoritePokemon(data)
+        } catch (error) {
+            console.error(err)
+            setError(err)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
     const addFavorite = async () => {
         setIsLoading(true)
         setError(null)
         try {
             await favoriteAPI.post('/favoritePokemon', {
-                id: profilePokemon.id,
+                idPokemon: profilePokemon.id,
                 datetime: new Date(),
                 name: profilePokemon.name,
                 types: profilePokemon.types,
                 sprites: profilePokemon.sprites?.other['official-artwork']?.front_default
             })
+            Swal.fire({
+                title: "Success!",
+                text: "Pokemon added to favorites.",
+                icon: "success"
+            });
+            fetchFavorite()
+            handleShowButton()
         } catch (err) {
             console.error(err)
             setError(err)
@@ -77,17 +100,38 @@ function ProfilePokemonPage() {
         setIsLoading(true)
         setError(null)
         try {
-            await favoriteAPI.delete('/favoritePokemon/' + id)
-        } catch (err) {
-            console.error(err)
-            setError(err)
+            await favoriteAPI.delete(`/favoritePokemon/${id}`)
+            Swal.fire({
+                title: "Success!",
+                text: "Pokemon removed from favorites.",
+                icon: "success"
+            });
+            fetchFavorite()
+            handleShowButton()
+        } catch (error) {
+            console.error(error)
+            setError(error)
         } finally {
             setIsLoading(false)
         }
     }
 
+    const handleShowButton = () => {
+        const findFavorite = favoritePokemon.find(favorite => favorite.name === profilePokemon.name)
+        if (findFavorite) {
+            return (
+                <button className='w-full text-lg border py-1 mb-2 rounded-full' value={profilePokemon} onClick={() => deleteFavorite(findFavorite.id)}>delete from Favorite</button>
+            )
+        } else {
+            return (
+                <button className='w-full text-lg border py-1 mb-2 rounded-full' value={profilePokemon} onClick={() => addFavorite()}>add to Favorite</button>
+            )
+        }
+    }
+
     useEffect(() => {
         fetchProfilePokemon()
+        fetchFavorite()
     }, [])
 
     const formattedId = profilePokemon.id ? String(profilePokemon.id).padStart(4, '0') : ''
@@ -133,12 +177,7 @@ function ProfilePokemonPage() {
                                 )}
                             </div>
                             <div className='grid gap-3'>
-                                <form className='text-center' onSubmit={(e) => addFavorite(e)}>
-                                    <button className='w-full text-lg border py-1 mb-2 rounded-full' value={profilePokemon} type='submit'>add to Favorite</button>
-                                </form>
-                                <form className='text-center' onClick={() => deleteFavorite(() => deleteFavorite(profilePokemon.id))}>
-                                    <button className='w-full text-lg border py-1 mb-2 rounded-full' value={profilePokemon} type='submit'>delete from Favorite</button>
-                                </form>
+                                {handleShowButton()}
                             </div>
 
                         </div>
