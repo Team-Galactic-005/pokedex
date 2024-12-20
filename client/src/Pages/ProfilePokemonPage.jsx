@@ -74,7 +74,7 @@ function ProfilePokemonPage() {
 
   return (
     <>
-      <div className="container mx-auto text-white my-5 grid gap-y-32">
+      <div className="container mx-auto text-white my-5 grid gap-y-[65px]">
         <div>
           <div className="flex justify-center relative">
             <img className="absolute -z-20" src={bg} alt="" />
@@ -193,7 +193,7 @@ function ProfilePokemonPage() {
           </div>
           <div></div>
           <div>
-            <h1 className="text-3xl text-[#B0E5F9]">Statistics</h1>
+            <h1 className="text-3xl text-[#B0E5F9] ml-20">Statistics</h1>
             <div className="mt-5">
               {profilePokemon.stats?.map((stat) => {
                 const formattedStats = stat.stat.name
@@ -213,7 +213,7 @@ function ProfilePokemonPage() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-20">
           <div className="text-center border border-[#466E9B] rounded-full w-[50%] text-lg text-[#b3eafe] hover:bg-[#B4EBFF] hover:text-black hover:border-transparent">
             <Link to="/">
               <button className="w-full p-2">Back to Home Page</button>
