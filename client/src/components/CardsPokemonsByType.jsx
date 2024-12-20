@@ -26,7 +26,7 @@ const colorButton = {
     unknown: 'bg-[#A0A0A0]'
 }
 
-function CardsPokemonsByType({ pokemons, isLoading, error, loadMorePokemons, filterPokemons }) {
+function CardsPokemonsByType({ isLoading, error, filterPokemons }) {
     const navigate = useNavigate()
     const goToPokemonProfile = (pokemonId) => {
         navigate(`/profilepokemon/${pokemonId}`)
@@ -45,7 +45,7 @@ function CardsPokemonsByType({ pokemons, isLoading, error, loadMorePokemons, fil
                     </div>
                 ) : error ? (
                     <div>
-                        <span>Error</span>
+                        <span>Data Not Found</span>
                     </div>
                 ) : (
                     filterPokemons?.map((pokemon) => {

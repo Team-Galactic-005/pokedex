@@ -26,7 +26,7 @@ const colorButton = {
     unknown: 'bg-[#A0A0A0]'
 }
 
-function CardsPokemons({ pokemons, isLoading, error, loadMorePokemons, filterPokemons }) {
+function CardsPokemons({ pokemons, isLoading, error, loadMorePokemons }) {
     const navigate = useNavigate()
     const goToPokemonProfile = (pokemonId) => {
         navigate(`/profilepokemon/${pokemonId}`)
